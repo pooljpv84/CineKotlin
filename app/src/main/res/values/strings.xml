@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Mitocine</string>
+    <string name="str_username">Usuario</string>
+    <string name="str_password">Contraseña</string>
+    <string name="str_login">Iniciar Sesión</string>
+    <string name="str_register">Registrarse Ahora</string>
+</resources>
