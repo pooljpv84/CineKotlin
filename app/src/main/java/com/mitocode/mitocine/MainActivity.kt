@@ -1,7 +1,8 @@
 package com.mitocode.mitocine
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.mitocode.mitocine.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +27,12 @@ class MainActivity : AppCompatActivity() {
                 binding.passwordTil.error = "El campo contraseña es requerido"
             else
                 binding.passwordTil.error = null
+        }
+        //click en registrar nuevo usuario
+        binding.textViewRegister.setOnClickListener {
+            val intent = Intent(applicationContext,RegisterActivity::class.java)
+            startActivity(intent)
+
         }
     }
 }
