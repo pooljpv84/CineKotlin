@@ -15,18 +15,22 @@ class MainActivity : AppCompatActivity() {
 
         //CLIK EN EL BOTON
         binding.btnlogin.setOnClickListener {
-            val username = binding.username.text
-            val password = binding.password.text
+            val username = binding.username.text.toString()
+            val password = binding.password.text.toString()
 
             //validar el material design del texto
-            if (username.isNullOrBlank())
+            if (username.isBlank())
                 binding.usernameTil.error = "El campo usuario es requerido"
             else
                 binding.usernameTil.error = null
-            if (password.isNullOrBlank())
+            if (password.isBlank())
                 binding.passwordTil.error = "El campo contraseña es requerido"
             else
                 binding.passwordTil.error = null
+
+            //ir a la cartelera
+            val intent = Intent(applicationContext,HomeActivity::class.java)
+            startActivity(intent)
         }
         //click en registrar nuevo usuario
         binding.textViewRegister.setOnClickListener {

@@ -21,9 +21,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/username"
             android:layout_width="match_parent"
-            android:inputType="text"
             android:layout_height="wrap_content"
-            android:hint="@string/str_username" />
+            android:hint="@string/str_username"
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -40,9 +40,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:layout_width="match_parent"
-            android:inputType="textPassword"
             android:layout_height="wrap_content"
-            android:hint="@string/str_password" />
+            android:hint="@string/str_password"
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -61,11 +61,14 @@
         android:id="@+id/textViewRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="25dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:padding="8dp"
         android:text="@string/str_register"
+        android:textAllCaps="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

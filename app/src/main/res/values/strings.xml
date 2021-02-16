@@ -13,4 +13,6 @@
     <string name="str_email">Correo Electrónico</string>
     <string name="str_phone">Teléfono</string>
     <string name="str_register2">Registrar</string>
+    <string name="error_username">El campo usuario es requerido</string>
+    <string name="str_movie">Pelicula</string>
 </resources>
