@@ -11,6 +11,7 @@
         android:theme="@style/Theme.Mitocine">
         <activity
             android:name=".RegisterActivity"
+
             android:screenOrientation="portrait" />
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait">

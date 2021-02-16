@@ -13,6 +13,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
         //regreso en el action var
         this.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        title= getString(R.string.str_register_now)
 
     }
 

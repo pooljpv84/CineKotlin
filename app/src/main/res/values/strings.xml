@@ -4,4 +4,13 @@
     <string name="str_password">Contraseña</string>
     <string name="str_login">Iniciar Sesión</string>
     <string name="str_register">Registrarse Ahora</string>
+    <string name="str_register_now">Registrarse ahora</string>
+    <string name="str_username2">Usuario</string>
+    <string name="str_name">Nombre</string>
+    <string name="str_lastname">Apellido</string>
+    <string name="str_address">Direccion</string>
+    <string name="str_password2">Contraseña</string>
+    <string name="str_email">Correo Electrónico</string>
+    <string name="str_phone">Teléfono</string>
+    <string name="str_register2">Registrar</string>
 </resources>
