@@ -16,7 +16,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         //declaro e instancio el adapter
         val adapter = MovieAdapter()
-        binding.movies.layoutManager = GridLayoutManager(this,2)  //recycler tipo grilla
+          binding.movies.layoutManager = GridLayoutManager(this,2)  //recycler tipo grilla
         //binding.movies.layoutManager = LinearLayoutManager(this) ////recycler tipo lista
         binding.movies.adapter = adapter
 
