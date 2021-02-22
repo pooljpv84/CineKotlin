@@ -1,4 +1,4 @@
-package com.mitocode.mitocine
+package com.mitocode.mitocine.models
 
 data class Movie(
     var title: String,

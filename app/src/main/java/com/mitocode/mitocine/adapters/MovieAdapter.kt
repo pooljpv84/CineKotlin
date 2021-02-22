@@ -1,13 +1,15 @@
-package com.mitocode.mitocine
+package com.mitocode.mitocine.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.view.menu.ActionMenuItemView
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.mitocode.mitocine.activities.MovieDetailActivity
 import com.mitocode.mitocine.databinding.ItemMovieBinding
+import com.mitocode.mitocine.models.Movie
 import java.util.ArrayList
 
 class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
@@ -16,7 +18,7 @@ class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
     private lateinit var context : Context
     private val movies = ArrayList<Movie>() //POJO movies
 
-    fun addItem(movie:Movie){
+    fun addItem(movie: Movie){
        movies.add(movie)
        notifyDataSetChanged()
     }
@@ -28,9 +30,24 @@ class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
             val image = movies[position].image
 
             binding.movieTitle.text = title
-            binding.movieImage.setImageDrawable(
+            //COLOCAR IMAGEN EN UN IMAGEVIEW
+            /*binding.movieImage.setImageDrawable(
                 ContextCompat.getDrawable(
-                    context,R.mipmap.example))
+                    context,R.mipmap.example))*/
+            //COLOCAR IMAGEN EN UN IMAGEVIEW PERO CON LIBRERIA GLIDE
+            //val url : String = ""
+            Glide.with(context)
+                .load(image)
+                .centerCrop()
+                .fitCenter()
+                .into(binding.movieImage)
+            //imagen desde archivo
+            //Glide.with(context).load(R.mipmap.example).centerCrop().fitCenter().into(binding.movieImage)
+            //al dar click en un elemento del recycler
+            binding.root.setOnClickListener{
+                val intent = Intent(context,MovieDetailActivity::class.java)
+                context.startActivity(intent)
+            }
         }
     }
 

@@ -1,8 +1,9 @@
-package com.mitocode.mitocine
+package com.mitocode.mitocine.activities
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.mitocode.mitocine.HomeActivity
 import com.mitocode.mitocine.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -29,12 +30,12 @@ class MainActivity : AppCompatActivity() {
                 binding.passwordTil.error = null
 
             //ir a la cartelera
-            val intent = Intent(applicationContext,HomeActivity::class.java)
+            val intent = Intent(applicationContext, MenuActivity::class.java)
             startActivity(intent)
         }
         //click en registrar nuevo usuario
         binding.textViewRegister.setOnClickListener {
-            val intent = Intent(applicationContext,RegisterActivity::class.java)
+            val intent = Intent(applicationContext, RegisterActivity::class.java)
             startActivity(intent)
 
         }

@@ -1,8 +1,9 @@
-package com.mitocode.mitocine
+package com.mitocode.mitocine.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import com.mitocode.mitocine.R
 import com.mitocode.mitocine.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {

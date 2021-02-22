@@ -15,4 +15,11 @@
     <string name="str_register2">Registrar</string>
     <string name="error_username">El campo usuario es requerido</string>
     <string name="str_movie">Pelicula</string>
+    <string name="str_movies">Cartelera</string>
+    <string name="str_favourite">Favorito</string>
+    <string name="str_settings">Ajustes</string>
+    <string name="str_soon">Proximamente</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

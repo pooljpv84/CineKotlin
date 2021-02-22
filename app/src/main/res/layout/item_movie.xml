@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="500dp">
 
     <ImageView
         android:id="@+id/movieImage"
@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
+
         android:contentDescription="@string/str_movie"
         tools:srcCompat="@tools:sample/avatars" />
 
