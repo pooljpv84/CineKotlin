@@ -6,9 +6,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bumptech.glide.manager.Lifecycle
 import com.mitocode.mitocine.fragments.movies.MovieListFragment
-import com.mitocode.mitocine.fragments.movies.SoonListFragment
 
-class TabAdapter(fragmentManager: FragmentManager, lifecycle: androidx.lifecycle.Lifecycle, private val options:List<String>):
+
+class TabAdapter(fragmentManager: FragmentManager, lifecycle: androidx.lifecycle.Lifecycle,
+                 private val options:List<String>):
         FragmentStateAdapter(fragmentManager, lifecycle)
 {
     override fun getItemCount(): Int
@@ -24,15 +25,16 @@ class TabAdapter(fragmentManager: FragmentManager, lifecycle: androidx.lifecycle
         {
             0->
             {
-                MovieListFragment.newInstance()
+                MovieListFragment.newInstance(MovieListFragment.MOVIE)
             }
             1->
             {
-                SoonListFragment.newInstance()
+                //SoonListFragment
+                MovieListFragment.newInstance(MovieListFragment.SOON)
             }
             else->
             {
-                MovieListFragment.newInstance()
+                MovieListFragment.newInstance(MovieListFragment.MOVIE)
             }
 
         }

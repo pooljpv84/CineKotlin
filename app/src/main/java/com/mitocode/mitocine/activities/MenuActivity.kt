@@ -4,11 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.mitocode.mitocine.R
-import com.mitocode.mitocine.databinding.ActivityHomeBinding
+
 import com.mitocode.mitocine.databinding.ActivityMenuBinding
-import com.mitocode.mitocine.fragments.FavouritesFragment
+
 import com.mitocode.mitocine.fragments.MoviesFragment
 import com.mitocode.mitocine.fragments.SettingsFragment
+import com.mitocode.mitocine.fragments.movies.MovieListFragment
 
 class MenuActivity : AppCompatActivity() {
     lateinit var binding: ActivityMenuBinding
@@ -34,7 +35,7 @@ class MenuActivity : AppCompatActivity() {
                 }
                 R.id.nav_favourite -> {
                     title=getString(R.string.str_favourite)
-                    changeFraments(FavouritesFragment.newInstance())
+                    changeFraments(MovieListFragment.newInstance(MovieListFragment.FAVOURITE))
                     true
                 }
                 R.id.nav_settings -> {

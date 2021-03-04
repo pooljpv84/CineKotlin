@@ -3,7 +3,6 @@ package com.mitocode.mitocine.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.mitocode.mitocine.HomeActivity
 import com.mitocode.mitocine.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

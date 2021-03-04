@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.mitocode.mitocine.R
 import com.mitocode.mitocine.activities.MovieDetailActivity
 import com.mitocode.mitocine.databinding.ItemMovieBinding
 import com.mitocode.mitocine.models.Movie
@@ -38,6 +39,7 @@ class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
             //val url : String = ""
             Glide.with(context)
                 .load(image)
+                .placeholder(R.mipmap.naruto)
                 .centerCrop()
                 .fitCenter()
                 .into(binding.movieImage)
@@ -46,7 +48,7 @@ class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
             //al dar click en un elemento del recycler
             binding.root.setOnClickListener{
                 val intent = Intent(context,MovieDetailActivity::class.java)
-                intent.putExtra("title",title)
+                intent.putExtra("movie",movies[position]) //ENVIAR OBJETO PARCEABLE A LA OTRA ACTIVIDAD
                 context.startActivity(intent)
             }
         }

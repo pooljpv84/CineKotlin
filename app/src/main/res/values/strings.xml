@@ -22,4 +22,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lorem">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,</string>
+    <string name="str_comment">Comentar</string>
+    <string name="perfil">perfil</string>
+    <string name="str_dark_theme">Activar tema oscuro</string>
+    <string name="str_change_address_google">Cambiar dirección Google</string>
+    <string name="str_change_address">Cambiar dirección</string>
+    <string name="str_logout">Cerrar Sesión</string>
+    <string name="str_empty_list">No hay datos que mostrar</string>
 </resources>
