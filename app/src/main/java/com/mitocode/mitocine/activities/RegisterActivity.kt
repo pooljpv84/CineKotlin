@@ -1,10 +1,16 @@
 package com.mitocode.mitocine.activities
 
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import android.widget.Toast
 import com.mitocode.mitocine.R
+import com.mitocode.mitocine.database.AppDatabase
 import com.mitocode.mitocine.databinding.ActivityRegisterBinding
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class RegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRegisterBinding
@@ -72,6 +78,40 @@ class RegisterActivity : AppCompatActivity() {
             binding.phoneTil.error = "El campo teléfono es requerido"
         else
             binding.phoneTil.error = null
+
+        //INSERTAR EN LA BDD
+        val person = com.mitocode.mitocine.database.Person()
+        //carga de los textos al OBJ
+        person.username = username
+        person.name = name
+        person.lastName = lastName
+        person.email = email
+        person.address = address
+        person.phone = phone
+        person.password = password
+
+        //asincronia
+        doAsync {
+            val database = AppDatabase.getInstance(this@RegisterActivity)
+
+            //validar la existencia del usuario
+            if (database.personDao().existsUser(username) == null) //si es nulo inserta en la bdd
+            {
+                database.personDao().insert(person)
+                uiThread {
+                    Toast.makeText(this@RegisterActivity, "Se registro la persona", Toast.LENGTH_SHORT).show()
+                }
+            }
+            else
+            {
+                uiThread {
+                    Toast.makeText(this@RegisterActivity, "El usuario ya existe", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+        }
+
+
 
     }
 }

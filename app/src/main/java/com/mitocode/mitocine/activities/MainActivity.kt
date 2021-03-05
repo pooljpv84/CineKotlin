@@ -1,9 +1,17 @@
 package com.mitocode.mitocine.activities
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
+import com.mitocode.mitocine.database.AppDatabase
 import com.mitocode.mitocine.databinding.ActivityMainBinding
+import com.mitocode.mitocine.preferences.SharedPreferencesHelper
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -28,9 +36,30 @@ class MainActivity : AppCompatActivity() {
             else
                 binding.passwordTil.error = null
 
-            //ir a la cartelera
-            val intent = Intent(applicationContext, MenuActivity::class.java)
-            startActivity(intent)
+            //validar la existncia del ususario y la password en la BDD
+            doAsync {
+                val database = AppDatabase.getInstance(this@MainActivity)
+                val personResponse = database.personDao().validateUser(username,password)
+                uiThread {
+                   if (personResponse?.username !=null)
+                   {
+                       //almacenar user en  preferencias
+                       SharedPreferencesHelper.addUsername(this@MainActivity,username)
+
+                       Log.d("sms", personResponse.username + "  " +personResponse.name)
+                       //ir a la cartelera
+                       val intent = Intent(applicationContext, MenuActivity::class.java)
+                       startActivity(intent)
+                   }
+                    else{
+                        Toast.makeText(this@MainActivity,"Usuario yo clave incorrecto",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+
+
+
         }
         //click en registrar nuevo usuario
         binding.textViewRegister.setOnClickListener {
