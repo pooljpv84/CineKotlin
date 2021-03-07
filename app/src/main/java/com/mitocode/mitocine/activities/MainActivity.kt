@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                        //almacenar user en  preferencias
                        SharedPreferencesHelper.addUsername(this@MainActivity,username)
 
-                       Log.d("sms", personResponse.username + "  " +personResponse.name)
+                       Log.i("sms", personResponse.username + "  " +personResponse.name)
                        //ir a la cartelera
                        val intent = Intent(applicationContext, MenuActivity::class.java)
                        startActivity(intent)

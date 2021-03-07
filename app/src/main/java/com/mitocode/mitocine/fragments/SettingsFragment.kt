@@ -9,7 +9,11 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.mitocode.mitocine.R
 import com.mitocode.mitocine.activities.MainActivity
+import com.mitocode.mitocine.database.AppDatabase
 import com.mitocode.mitocine.databinding.FragmentSettingsBinding
+import com.mitocode.mitocine.preferences.SharedPreferencesHelper
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,6 +50,29 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //Mostrar los datos de la BDD en las cajas de texto
+        //Consumir en otro hilo
+            doAsync {
+                val username = SharedPreferencesHelper.getUserName(requireContext())
+                if (username !=null){
+                    val person =AppDatabase.getInstance(requireContext()).personDao().existsUser(username)
+                    //volver al hilo principal e ir al diseño principal del Activity
+                    uiThread {
+                        binding.username.setText(person.username)
+                        binding.name.setText(person.name)
+                        binding.lastname.setText(person.lastName)
+                        binding.email.setText(person.email)
+                        binding.phone.setText(person.phone)
+
+                    }
+
+                }
+
+
+            }
+        //
+
         Glide.with(requireContext())
                 .load("https://www.nicepng.com/png/detail/209-2099655_anime-avatar-png-avatar-gamer.png")
                 .placeholder(R.mipmap.profile)
@@ -54,6 +81,8 @@ class SettingsFragment : Fragment() {
                 .circleCrop()
                 .into(binding.profile)
         binding.logout.setOnClickListener {
+            //ELIMINAR LAS PREFERENCIAS DEL USUSARIO
+            SharedPreferencesHelper.deleteAll(requireContext())
             val intent = Intent(requireContext(),MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import com.mitocode.mitocine.R
 import com.mitocode.mitocine.databinding.ActivitySplashBinding
@@ -20,12 +21,15 @@ class SplashActivity : AppCompatActivity() {
         //hilos
         val handler = Handler()
         handler.postDelayed({
-
-            val intent = if (SharedPreferencesHelper.getUserName(this).isNullOrBlank())
+            val intent : Intent
+            var xx : String = SharedPreferencesHelper.getUserName(this).toString()
+            Log.i("sms",xx)
+            if (SharedPreferencesHelper.getUserName(this).isNullOrBlank())
             {
-                Intent(applicationContext,MainActivity::class.java)
+
+                intent = Intent(this,MainActivity::class.java)
             }else {
-                Intent(applicationContext,MenuActivity::class.java)
+                intent = Intent(this,MenuActivity::class.java)
             }
             startActivity(intent)
             finish()

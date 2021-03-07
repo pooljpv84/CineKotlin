@@ -1,6 +1,7 @@
 package com.mitocode.mitocine.fragments.movies
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,14 @@ import com.mitocode.mitocine.R
 import com.mitocode.mitocine.adapters.MovieAdapter
 import com.mitocode.mitocine.databinding.FragmentMovieListBinding
 import com.mitocode.mitocine.models.Movie
+import com.mitocode.mitocine.network.MovieDataResponse
+import com.mitocode.mitocine.network.MovieResponse
+import com.mitocode.mitocine.network.MovieServices
+import com.mitocode.mitocine.network.RetrofitConfiguration
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.create
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,13 +86,60 @@ class MovieListFragment : Fragment() {
     private fun loadMovie()
     {
 
-        adapter.addItem(Movie("Pelicula 1","https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg","aaaaa"))
+        //IMAGENES QUEMADAS
+        /*adapter.addItem(Movie("Pelicula 1","https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg","aaaaa"))
         adapter.addItem(Movie("Pelicula 2","https://i.blogs.es/d93d8d/marvel/1366_2000.jpeg","bbbb"))
         adapter.addItem(Movie("Pelicula 3","https://hipertextual.com/files/2019/05/hipertextual-avengers-endgame-futuro-capitan-america-2019781893-scaled.jpg","cccc"))
         adapter.addItem(Movie("Pelicula 4","https://frasesdelavida.com/wp-content/uploads/2018/04/Hulk.jpg","dddd"))
         adapter.addItem(Movie("Pelicula 5","https://i.blogs.es/7ccbec/iron-man/840_5ggg60.jpg","eeeee"))
-        validateEmpty()
+        */
+        //base url y luego la interfaz con el metodo get
+        val retrofit = RetrofitConfiguration.getConfiguration().create(MovieServices::class.java)
+        //decalar a:(movie/premieres)
+        val call = retrofit.getMoviePremieres()
+        //instanciar
+        call.enqueue(object: Callback<MovieResponse>{
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>)
+            {
+                //200
+                Log.i("sms","Onresponse")
+                //decodificar informacion
+                val body = response.body()
+                if (body!=null){
+                    if (body.status){
+                        val data: ArrayList<MovieDataResponse> = body.data
+                        //convertir clase MovieDataRepsonse a clase Movie para poder agregar
+                        val movies = convertResponseMovie(data)
+                        //llamar al adaptador
+                        adapter.addItems(movies)
+                        validateEmpty()
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable)
+            {
+                //!=200
+                Log.i("sms","OnFailure")
+            }
+        })
+
+
     }
+
+    private fun convertResponseMovie(data: ArrayList<MovieDataResponse>): ArrayList<Movie>
+    {
+        val response = ArrayList<Movie>()
+        if (data!=null)
+        {
+            for (item in data){
+                response.add(Movie(item.title, item.urlImage, item.des))
+            }
+        }
+    return response
+    }
+
 
     private fun validateEmpty() {
         if (adapter.itemCount == 0){binding.linearEmpty.visibility = View.VISIBLE}

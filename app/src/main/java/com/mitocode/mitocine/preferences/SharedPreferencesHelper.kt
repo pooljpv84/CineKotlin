@@ -13,7 +13,7 @@ class SharedPreferencesHelper
     fun addUsername(context: Context, username :String)
     {
         val edit=context.getSharedPreferences(PREFERENCES_NAME,Context.MODE_PRIVATE).edit()
-        edit.putString("KEY_USERNAME",username)
+        edit.putString(KEY_USERNAME,username)
         edit.apply()
     }
     fun getUserName(context: Context):String?

@@ -79,4 +79,10 @@ class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         return movies.size
     }
 
+    fun addItems(movies: ArrayList<Movie>)
+    {
+        this.movies.addAll(movies)
+        notifyDataSetChanged()
+    }
+
 }
