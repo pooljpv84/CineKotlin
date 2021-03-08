@@ -4,4 +4,4 @@
 ![img3](https://github.com/pooljpv84/CineKotlin/blob/main/instrucciones/3.png)
 ![img4](https://github.com/pooljpv84/CineKotlin/blob/main/instrucciones/4.png)
 ![img5](https://github.com/pooljpv84/CineKotlin/blob/main/instrucciones/5.png)
-![img6](https://github.com/pooljpv84/CineKotlin/blob/main/instrucciones/6-.png)
+![img6](https://github.com/pooljpv84/CineKotlin/blob/main/instrucciones/6-.PNG)
