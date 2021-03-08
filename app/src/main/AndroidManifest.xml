@@ -15,6 +15,7 @@
         android:theme="@style/Theme.Mitocine">
         <activity android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme_Night"
 
             >
             <intent-filter>

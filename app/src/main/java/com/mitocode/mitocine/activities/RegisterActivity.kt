@@ -79,7 +79,8 @@ class RegisterActivity : AppCompatActivity() {
         else
             binding.phoneTil.error = null
 
-        //INSERTAR EN LA BDD
+        /*
+        //------------------------INSERTAR EN LA BDD INTERNA-------------------------------
         val person = com.mitocode.mitocine.database.Person()
         //carga de los textos al OBJ
         person.username = username
@@ -109,7 +110,8 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
 
-        }
+        }*/
+        //------------------------FIN DE INSERTAR EN LA BDD INTERNA-------------------------------
 
 
 

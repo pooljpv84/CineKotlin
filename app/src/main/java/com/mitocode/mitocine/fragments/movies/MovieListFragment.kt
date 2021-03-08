@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.mitocode.mitocine.R
 import com.mitocode.mitocine.adapters.MovieAdapter
 import com.mitocode.mitocine.databinding.FragmentMovieListBinding
+import com.mitocode.mitocine.databinding.LoadingBinding
 import com.mitocode.mitocine.models.Movie
 import com.mitocode.mitocine.network.MovieDataResponse
 import com.mitocode.mitocine.network.MovieResponse
@@ -85,6 +86,8 @@ class MovieListFragment : Fragment() {
 
     private fun loadMovie()
     {
+        val bindingLoading = binding.loadingLayout
+        bindingLoading.loading.visibility = View.VISIBLE
 
         //IMAGENES QUEMADAS
         /*adapter.addItem(Movie("Pelicula 1","https://www.adslzone.net/app/uploads-adslzone.net/2019/04/borrar-fondo-imagen.jpg","aaaaa"))
@@ -106,6 +109,7 @@ class MovieListFragment : Fragment() {
                 //decodificar informacion
                 val body = response.body()
                 if (body!=null){
+                    bindingLoading.loading.visibility = View.GONE
                     if (body.status){
                         val data: ArrayList<MovieDataResponse> = body.data
                         //convertir clase MovieDataRepsonse a clase Movie para poder agregar
@@ -113,7 +117,12 @@ class MovieListFragment : Fragment() {
                         //llamar al adaptador
                         adapter.addItems(movies)
                         validateEmpty()
+
+                    }else{
+
+                        validateEmpty()
                     }
+
                 }
 
             }
