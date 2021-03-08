@@ -51,12 +51,19 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
+
+
+
+
+
         //Mostrar los datos de la BDD en las cajas de texto
         //Consumir en otro hilo
             doAsync {
                 val username = SharedPreferencesHelper.getUserName(requireContext())
-                if (username !=null){
-                    val person =AppDatabase.getInstance(requireContext()).personDao().existsUser(username)
+
+                    val person =AppDatabase.getInstance(requireContext()).personDao().existsUser(username.toString())
                     if (person !=null)
                     {
                         //volver al hilo principal e ir al diseño principal del Activity
@@ -70,7 +77,7 @@ class SettingsFragment : Fragment() {
                         }
                     }
 
-                }
+
 
 
             }
