@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.mitocode.mitocine.R
 import com.mitocode.mitocine.database.AppDatabase
 import com.mitocode.mitocine.databinding.ActivityRegisterBinding
+import com.mitocode.mitocine.network.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
     lateinit var binding: ActivityRegisterBinding
@@ -79,8 +84,7 @@ class RegisterActivity : AppCompatActivity() {
         else
             binding.phoneTil.error = null
 
-        /*
-        //------------------------INSERTAR EN LA BDD INTERNA-------------------------------
+
         val person = com.mitocode.mitocine.database.Person()
         //carga de los textos al OBJ
         person.username = username
@@ -90,7 +94,8 @@ class RegisterActivity : AppCompatActivity() {
         person.address = address
         person.phone = phone
         person.password = password
-
+        /*
+        //------------------------INSERTAR EN LA BDD INTERNA-------------------------------
         //asincronia
         doAsync {
             val database = AppDatabase.getInstance(this@RegisterActivity)
@@ -111,7 +116,53 @@ class RegisterActivity : AppCompatActivity() {
             }
 
         }*/
-        //------------------------FIN DE INSERTAR EN LA BDD INTERNA-------------------------------
+        //------------------------FIN DE INSERTAR EN LA BDD INTERNA-------------------------------//
+
+        //----------------INSERTAR DATA EN LA BDD EXTERNA---------------//
+
+        //base url y luego la interfaz con el metodo get
+        val retrofit = RetrofitConfiguration.getConfiguration().create(MovieServices::class.java)
+        //decalar a:(movie/premieres)
+        val call = retrofit.saveUser(person.name, person.lastName,
+            person.username, person.password, person.email,
+            person.address, person.phone)
+        //instanciar
+        call.enqueue(object : Callback<UserResponse> {
+            override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                //200
+                //200
+                Log.i("sms","Onresponse")
+                //decodificar informacion
+                val body = response.body()
+                if (body!=null){
+                    if (body.status)
+                    {
+                        val data: UserDataResponse = body.data
+                        //validar el ID
+                        if (data.id>0)
+                        {
+                            Toast.makeText(this@RegisterActivity, "Se registro la persona", Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        Toast.makeText(this@RegisterActivity, "Ocurrió un error", Toast.LENGTH_SHORT).show()
+                    }
+
+
+                }
+            }
+
+            override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                //!=200
+            }
+
+
+        })
+
+
+        //----------------FIN INSERTAR DATA EN LA BDD EXTERNA---------------//
+
+
+
 
 
 

@@ -81,7 +81,45 @@ class MovieListFragment : Fragment() {
 
     private fun loadSoon()
     {
-        validateEmpty()
+        val bindingLoading = binding.loadingLayout
+        bindingLoading.loading.visibility = View.VISIBLE
+        //base url y luego la interfaz con el metodo get
+        val retrofit = RetrofitConfiguration.getConfiguration().create(MovieServices::class.java)
+        //decalar a:(movie/premieres)
+        val call = retrofit.getMovieOther()
+        //instanciar
+        call.enqueue(object: Callback<MovieResponse>{
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>)
+            {
+                //200
+                Log.i("sms","Onresponse proximamente")
+                //decodificar informacion
+                val body = response.body()
+                if (body!=null){
+                    bindingLoading.loading.visibility = View.GONE
+                    if (body.status){
+                        val data: ArrayList<MovieDataResponse> = body.data
+                        //convertir clase MovieDataRepsonse a clase Movie para poder agregar
+                        val movies = convertResponseMovie(data)
+                        //llamar al adaptador
+                        adapter.addItems(movies)
+                        validateEmpty()
+
+                    }else{
+
+                        validateEmpty()
+                    }
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable)
+            {
+                //!=200
+                Log.i("sms","OnFailure")
+            }
+        })
     }
 
     private fun loadMovie()

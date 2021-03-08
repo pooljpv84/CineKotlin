@@ -57,14 +57,17 @@ class SettingsFragment : Fragment() {
                 val username = SharedPreferencesHelper.getUserName(requireContext())
                 if (username !=null){
                     val person =AppDatabase.getInstance(requireContext()).personDao().existsUser(username)
-                    //volver al hilo principal e ir al diseño principal del Activity
-                    uiThread {
-                        binding.username.setText(person.username)
-                        binding.name.setText(person.name)
-                        binding.lastname.setText(person.lastName)
-                        binding.email.setText(person.email)
-                        binding.phone.setText(person.phone)
+                    if (person !=null)
+                    {
+                        //volver al hilo principal e ir al diseño principal del Activity
+                        uiThread {
+                            binding.username.setText(person.username)
+                            binding.name.setText(person.name)
+                            binding.lastname.setText(person.lastName)
+                            binding.email.setText(person.email)
+                            binding.phone.setText(person.phone)
 
+                        }
                     }
 
                 }
