@@ -85,26 +85,21 @@ class MovieListFragment : Fragment() {
 
     private fun loadFavourite()
     {
-        validateEmpty()
 
+    //validateEmpty()
 
                 //asincronia
                 doAsync {
-                    val database = AppDatabase.getInstance(requireActivity())
+                    val database = AppDatabase.getInstance(requireContext())
                     val favourites = database.movieDao().getAll()
                     //llamar al adaptador
                     val movies = convertResponseMovie2(favourites)
-
-
                         //llamar al adaptador
                         adapter.addItems(movies)
                         validateEmpty()
 
-
-
                 }
-
-    }
+                    }
     private fun convertResponseMovie2(data: List<com.mitocode.mitocine.database.Movie>): ArrayList<Movie>
     {
         val response = ArrayList<Movie>()
