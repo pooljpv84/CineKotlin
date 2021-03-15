@@ -2,24 +2,27 @@ package com.mitocode.mitocine.fragments.movies
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.mitocode.mitocine.R
 import com.mitocode.mitocine.adapters.MovieAdapter
+import com.mitocode.mitocine.database.AppDatabase
 import com.mitocode.mitocine.databinding.FragmentMovieListBinding
-import com.mitocode.mitocine.databinding.LoadingBinding
 import com.mitocode.mitocine.models.Movie
 import com.mitocode.mitocine.network.MovieDataResponse
 import com.mitocode.mitocine.network.MovieResponse
 import com.mitocode.mitocine.network.MovieServices
 import com.mitocode.mitocine.network.RetrofitConfiguration
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.create
+import java.util.*
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,7 +62,7 @@ class MovieListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //declaro e instancio el adapter
         adapter = MovieAdapter()
-        binding.movies.layoutManager = GridLayoutManager(context,2)  //recycler tipo grilla
+        binding.movies.layoutManager = GridLayoutManager(context, 2)  //recycler tipo grilla
         //binding.movies.layoutManager = LinearLayoutManager(this) ////recycler tipo lista
         binding.movies.adapter = adapter
 
@@ -67,9 +70,15 @@ class MovieListFragment : Fragment() {
 
         when(param1)
         {
-            MOVIE ->{loadMovie()}
-            SOON ->{loadSoon()}
-            FAVOURITE ->{loadFavourite()}
+            MOVIE -> {
+                loadMovie()
+            }
+            SOON -> {
+                loadSoon()
+            }
+            FAVOURITE -> {
+                loadFavourite()
+            }
         }
 
     }
@@ -77,6 +86,35 @@ class MovieListFragment : Fragment() {
     private fun loadFavourite()
     {
         validateEmpty()
+
+
+                //asincronia
+                doAsync {
+                    val database = AppDatabase.getInstance(requireActivity())
+                    val favourites = database.movieDao().getAll()
+                    //llamar al adaptador
+                    val movies = convertResponseMovie2(favourites)
+
+
+                        //llamar al adaptador
+                        adapter.addItems(movies)
+                        validateEmpty()
+
+
+
+                }
+
+    }
+    private fun convertResponseMovie2(data: List<com.mitocode.mitocine.database.Movie>): ArrayList<Movie>
+    {
+        val response = ArrayList<Movie>()
+        if (data!=null)
+        {
+            for (item in data){
+                response.add(Movie(item.id,item.title, item.urlImage, item.description))
+            }
+        }
+        return response
     }
 
     private fun loadSoon()
@@ -88,16 +126,15 @@ class MovieListFragment : Fragment() {
         //decalar a:(movie/premieres)
         val call = retrofit.getMovieOther()
         //instanciar
-        call.enqueue(object: Callback<MovieResponse>{
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>)
-            {
+        call.enqueue(object : Callback<MovieResponse> {
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 //200
-                Log.i("sms","Onresponse proximamente")
+                Log.i("sms", "Onresponse proximamente")
                 //decodificar informacion
                 val body = response.body()
-                if (body!=null){
+                if (body != null) {
                     bindingLoading.loading.visibility = View.GONE
-                    if (body.status){
+                    if (body.status) {
                         val data: ArrayList<MovieDataResponse> = body.data
                         //convertir clase MovieDataRepsonse a clase Movie para poder agregar
                         val movies = convertResponseMovie(data)
@@ -105,7 +142,7 @@ class MovieListFragment : Fragment() {
                         adapter.addItems(movies)
                         validateEmpty()
 
-                    }else{
+                    } else {
 
                         validateEmpty()
                     }
@@ -114,10 +151,9 @@ class MovieListFragment : Fragment() {
 
             }
 
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable)
-            {
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 //!=200
-                Log.i("sms","OnFailure")
+                Log.i("sms", "OnFailure")
             }
         })
     }
@@ -139,16 +175,15 @@ class MovieListFragment : Fragment() {
         //decalar a:(movie/premieres)
         val call = retrofit.getMoviePremieres()
         //instanciar
-        call.enqueue(object: Callback<MovieResponse>{
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>)
-            {
+        call.enqueue(object : Callback<MovieResponse> {
+            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
                 //200
-                Log.i("sms","Onresponse")
+                Log.i("sms", "Onresponse")
                 //decodificar informacion
                 val body = response.body()
-                if (body!=null){
+                if (body != null) {
                     bindingLoading.loading.visibility = View.GONE
-                    if (body.status){
+                    if (body.status) {
                         val data: ArrayList<MovieDataResponse> = body.data
                         //convertir clase MovieDataRepsonse a clase Movie para poder agregar
                         val movies = convertResponseMovie(data)
@@ -156,7 +191,7 @@ class MovieListFragment : Fragment() {
                         adapter.addItems(movies)
                         validateEmpty()
 
-                    }else{
+                    } else {
 
                         validateEmpty()
                     }
@@ -165,10 +200,9 @@ class MovieListFragment : Fragment() {
 
             }
 
-            override fun onFailure(call: Call<MovieResponse>, t: Throwable)
-            {
+            override fun onFailure(call: Call<MovieResponse>, t: Throwable) {
                 //!=200
-                Log.i("sms","OnFailure")
+                Log.i("sms", "OnFailure")
             }
         })
 
@@ -181,7 +215,7 @@ class MovieListFragment : Fragment() {
         if (data!=null)
         {
             for (item in data){
-                response.add(Movie(item.title, item.urlImage, item.des))
+                response.add(Movie(item.id, item.title, item.urlImage, item.des))
             }
         }
     return response
@@ -211,7 +245,7 @@ class MovieListFragment : Fragment() {
         fun newInstance(param1: String) =
                 MovieListFragment().apply {
                     arguments = Bundle().apply {
-                        putString(ARG_PARAM1,param1)
+                        putString(ARG_PARAM1, param1)
 
                     }
                 }

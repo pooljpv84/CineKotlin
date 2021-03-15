@@ -11,13 +11,14 @@ import com.mitocode.mitocine.R
 import com.mitocode.mitocine.activities.MovieDetailActivity
 import com.mitocode.mitocine.databinding.ItemMovieBinding
 import com.mitocode.mitocine.models.Movie
-import java.util.ArrayList
+import kotlin.collections.ArrayList
 
 class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
 {
     lateinit var binding : ItemMovieBinding
     private lateinit var context : Context
     private val movies = ArrayList<Movie>() //POJO movies
+    private val moviess = ArrayList<com.mitocode.mitocine.database.Movie>() //POJO movies
 
     fun addItem(movie: Movie){
        movies.add(movie)
@@ -84,5 +85,6 @@ class MovieAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>()
         this.movies.addAll(movies)
         notifyDataSetChanged()
     }
+
 
 }

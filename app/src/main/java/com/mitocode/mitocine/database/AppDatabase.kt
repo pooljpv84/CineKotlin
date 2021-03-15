@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
- @Database (version = 1,entities = [Person::class],exportSchema = false)
+ @Database (version = 1,entities = [Person::class,Movie::class],exportSchema = false)
 
 public abstract class AppDatabase: RoomDatabase() {
     public abstract fun personDao(): PersonDao
+     public abstract fun movieDao(): MovieDao
 
     //INSTANCIAS
     companion object {

@@ -212,7 +212,14 @@ class SettingsFragment : Fragment() {
             //colacar imagen de la camara
             REQUEST_CODE_CAMERA ->{
                 if (resultCode == Activity.RESULT_OK){
-                    binding.profile.setImageURI(photoUri)
+                    //binding.profile.setImageURI(photoUri)
+                    Glide.with(requireContext())
+                            .load(photoUri)
+                            .placeholder(R.mipmap.profile)
+                            .centerCrop()
+                            .fitCenter()
+                            .circleCrop()
+                            .into(binding.profile)
                 }
             }
 
@@ -221,7 +228,16 @@ class SettingsFragment : Fragment() {
                 if (resultCode == Activity.RESULT_OK)
                 {
                     data?.data?.let { uri: Uri ->
-                        binding.profile.setImageURI(uri)
+                        //binding.profile.setImageURI(uri)
+                        Glide.with(requireContext())
+                                .load(uri)
+                                .placeholder(R.mipmap.profile)
+                                .centerCrop()
+                                .fitCenter()
+                                .circleCrop()
+                                .into(binding.profile)
+
+
                     }
                 }
             }
