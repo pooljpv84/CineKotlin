@@ -57,6 +57,13 @@
         <activity
             android:name=".activities.MainActivity"
             android:screenOrientation="portrait" />
+        <provider
+            android:authorities="com.mitocode.mitocine"
+            android:name="androidx.core.content.FileProvider"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
     </application>
-
+    
 </manifest>

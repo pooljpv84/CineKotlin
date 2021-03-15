@@ -8,11 +8,13 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.model.LatLng
@@ -30,6 +32,8 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
+import java.io.File
+import java.util.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -175,7 +179,26 @@ class SettingsFragment : Fragment() {
     @AfterPermissionGranted(RC_CAMERA)
     private fun checkCameraPermissions()
     {
-
+        val perms = arrayOf<String>(Manifest.permission.CAMERA)
+        if (EasyPermissions.hasPermissions(requireContext(), *perms)) {
+            showCamera()
+        } else {
+            // Do not have permissions, request them now
+            EasyPermissions.requestPermissions(this, getString(R.string.camera_rationale),
+                    RC_CAMERA, *perms)
+        }
+    }
+    private val photoPath : File by lazy {
+        File(requireActivity().filesDir,"${UUID.randomUUID()}.jpg")
+    }
+    lateinit var photoUri: Uri
+    private fun showCamera()
+    {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        intent.resolveActivity(requireActivity().packageManager)
+        photoUri = FileProvider.getUriForFile(requireContext(),"com.mitocode.mitocine",photoPath)
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri)
+        startActivityForResult(intent,REQUEST_CODE_CAMERA)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -186,6 +209,13 @@ class SettingsFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode)
         {
+            //colacar imagen de la camara
+            REQUEST_CODE_CAMERA ->{
+                if (resultCode == Activity.RESULT_OK){
+                    binding.profile.setImageURI(photoUri)
+                }
+            }
+
             //COLOCAR LA IMAGEN SELECCIONADA EN EL IMAGEVIEW
             REQUEST_CODE_GALLERY->{
                 if (resultCode == Activity.RESULT_OK)
@@ -195,6 +225,7 @@ class SettingsFragment : Fragment() {
                     }
                 }
             }
+
             123 -> {
                 if (resultCode == Activity.RESULT_OK) {
                     val placeResponse = Autocomplete.getPlaceFromIntent(data!!)
@@ -233,6 +264,7 @@ class SettingsFragment : Fragment() {
         const val RC_GALLERY=122
         const val RC_CAMERA=124
         const val REQUEST_CODE_GALLERY=100
+        const val REQUEST_CODE_CAMERA=101
 
         /**
          * Use this factory method to create a new instance of

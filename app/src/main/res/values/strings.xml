@@ -37,4 +37,5 @@
     <string name="str_get_position">Obtener Ubicación</string>
     <string name="location_rationale">El permiso es requerido</string>
     <string name="gallery_rationale">El permiso es requerido</string>
+    <string name="camera_rationale">El permiso es requerido</string>
 </resources>
