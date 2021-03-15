@@ -30,4 +30,11 @@
     <string name="str_change_address">Cambiar dirección</string>
     <string name="str_logout">Cerrar Sesión</string>
     <string name="str_empty_list">No hay datos que mostrar</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="str_search">Buscar</string>
+    <string name="str_latitude">Latitud</string>
+    <string name="str_longitude">Longitud</string>
+    <string name="str_get_position">Obtener Ubicación</string>
+    <string name="location_rationale">El permiso es requerido</string>
+    <string name="gallery_rationale">El permiso es requerido</string>
 </resources>
